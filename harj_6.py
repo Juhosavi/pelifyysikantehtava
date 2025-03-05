@@ -13,18 +13,18 @@ J = massa * (sivun_pituus ** 2) / 6
 # Alkuarvot
 xlist = [0.0]  # Alku x-koordinaatti
 ylist = [4.0]  # Alku y-koordinaatti
-v0 = 8  # Alku nopeus (m/s)
-kulma = radians(40)  # Kulma radiaaneina
+v0 = 10  # Alku nopeus (m/s)
+kulma = radians(50)  # Kulma radiaaneina
 vx = v0 * cos(kulma)  # Nopeuden x-komponentti
 vya = v0 * sin(kulma)  # Nopeuden y-komponentti
 
 # Alkuarvot kulmanopeudelle ja kulmakiihtyvyydelle
-kulmanopeus = 2.0  # Kulmanopeus (rad/s)
+kulmanopeus = 1.5  # Kulmanopeus (rad/s)
 kulmakiihtyvyys = 0.0  # Kulmakiihtyvyys (rad/s^2)
 
 # Janan määrittely (pisteet (-2, -1) ja (15, 1))
-jana_p1 = (-2, -1)
-jana_p2 = (15, 1)
+jana_p1 = (-2, -0.5)
+jana_p2 = (15, 3)
 
 def piste_janan_alla(x, y, p1, p2):
     """Tarkistaa, onko piste (x, y) janan alapuolella."""
@@ -84,5 +84,5 @@ for i, (x, y) in enumerate(zip(xlist, ylist)):
 plt.plot([jana_p1[0], jana_p2[0]], [jana_p1[1], jana_p2[1]], color='red')
 
 plt.xlim(-2, 15)
-plt.ylim(-2, 10)
+plt.ylim(-3, 10)
 plt.show()
