@@ -18,7 +18,7 @@ plot_raja_x = 10
 
 xlist_nelio = [10.0]  # Alku x-koordinaatti
 ylist_nelio = [0.0]  # Alku y-koordinaatti
-kulma_nelio = radians(140)  # Kulma radiaaneina
+kulma_nelio = radians(145)  # Kulma radiaaneina
 vx_nelio = v0 * cos(kulma_nelio)  # Nopeuden x-komponentti
 vya_nelio = v0 * sin(kulma_nelio)  # Nopeuden y-komponentti
 
@@ -85,7 +85,7 @@ for i, (x, y) in enumerate(zip(xlist_nelio, ylist_nelio)):
     liikekulmapisteet = [(x + px, y + py) for px, py in nelion_pisteet]
 
     # 2. Laske pyörimisestä johtuvat muutokset
-    theta = kulmanopeus_nelio * i * dt  # Kulma, jolla kolmio pyörii
+    theta = kulmanopeus_nelio * i * dt  # Kulma, jolla neliö pyörii
     pyorityskulmapisteet = []
 
     # Pyöritetään liikekulmapisteitä
@@ -97,7 +97,7 @@ for i, (x, y) in enumerate(zip(xlist_nelio, ylist_nelio)):
 
     pyorityskulmapisteet.append(pyorityskulmapisteet[0])  # Suljetaan yhdistämällä alku- ja loppupiste
 
-    # Piirretään kolmio
+    # Piirretään neliö
     nelion_x_koordinaatit, nelion_y_koordinaatit = zip(*pyorityskulmapisteet)
     plt.plot(nelion_x_koordinaatit, nelion_y_koordinaatit, color='red')
 
