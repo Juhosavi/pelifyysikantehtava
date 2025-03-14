@@ -41,15 +41,15 @@ kolmion_pisteet = [
     (1, 0)  # Oikea
 ]
 
-# Piirretään kolmio jokaiselle pisteelle
+# lasketaan uudet kulmapisteet ja niiden kierrot
 for i, (x, y) in enumerate(zip(xlist, ylist)):
     # uudet kulmapisteet ennen pyöritystä (liikutaan koordinaatistossa)
     kulmapisteet = [(x + px, y + py) for px, py in kolmion_pisteet]
-    # eli lisätään myös kulmapisteiden #sijainneille aiemmassa loopissa lasketut kolmion uudet sijainnit
+    # eli lisätään myös kulmapisteiden #sijainneille aiemmassa loopissa lasketut kolmion uudet CM-sijainnit
     # koordinaatistossa ennen kuin pyöritetään pisteitä
 
     # pyörimisestä johtuvat muutokset
-    theta = angular_speed * i * dt  # uusi kulma, jolla kolmio pyörii
+    theta = angular_speed * i * dt  # uusi kulma, jolla kolmio pyörii (kulmanopeus rad/s * deltatime = rad)
     uudet_kulmapisteet = []  # nollataan lista tässä vaiheessa ennen seuraavaa silmukkaa
 
     # Lasketaan uudessa sijainnissa olevan kolmion pisteiden pyöriminen
