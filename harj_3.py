@@ -19,7 +19,7 @@ plot_raja_x = 10
 # Pyörimisen nopeus (rad/s)
 angular_speed = -1  # Kulmanopeus (rad/s)
 
-# Lasketaan pisteet lentoradalle
+# Lasketaan kolmion CM-sijainteja ja lisätään ne listoihin niin kauan, kunnes annettu raja tulee vastaan
 while True:
     vyl = vya - g * dt  # Päivitetään y-nopeus (tässä painovoima pois päältä, joten ei kuitenkaan muutu)
     seuraava_x = xlist[-1] + vx * dt  # Seuraava x-koordinaatti, lisätään edelliseen sijaintiin uusi sijainti ajanhetken dt kuluttua
