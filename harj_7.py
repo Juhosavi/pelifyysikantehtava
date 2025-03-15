@@ -6,13 +6,13 @@ from math import sin, cos, radians
 g = 9.81  # Painovoima (m/s^2), tällä hetkellä pois päältä
 m = 0.1  # massa kg, ei vaikuta muuhun kuin törmäykseen, koska painovoima ainoa vaikuttava voima
 J = 0.04  # hitausmomentti kgm^2
-e = 1.0  # sysäyskerroin
+e = 1  # sysäyskerroin
 dt = 0.05  # Aikaväli (s)
 
 # Alkuarvot
 xlist = [0.0]  # Alku x-koordinaatti
 ylist = [4.0]  # Alku y-koordinaatti
-v0 = 8  # Alkunopeus (m/s)
+v0 = 9  # Alkunopeus (m/s)
 kulma = radians(55)  # Kulma asteina, joka muutetaan tässä radiaaneiksi radians-funktiolla
 vx = v0 * cos(kulma)  # Nopeuden x-komponentti
 vya = v0 * sin(kulma)  # Nopeuden y-komponentti
@@ -25,7 +25,7 @@ jana_p2 = (15, 0)
 plot_raja_x = 15
 
 # Pyörimisen nopeus (rad/s)
-w = -0.8  # Kulmanopeus alussa (rad/s)
+w = -3.0  # Kulmanopeus alussa (rad/s)
 
 # Kolmion pisteet (suhteelliset koordinaatit)
 kolmion_pisteet = [
@@ -53,7 +53,7 @@ while True:
         # koordinaatistossa ennen kuin pyöritetään pisteitä
 
         # pyörimisestä johtuvat muutokset
-        theta = w * i * dt  # uusi kulma, jolla kolmio pyörii (kulmanopeus rad/s * deltatime = rad)
+        theta = w * (i * dt)  # uusi kulma, jolla kolmio pyörii (kulmanopeus rad/s * deltatime = rad)
         uudet_kulmapisteet = []  # nollataan lista tässä vaiheessa ennen seuraavaa silmukkaa
 
         # Lasketaan uudessa sijainnissa olevan kolmion pisteiden pyöriminen
@@ -132,7 +132,7 @@ while True:
         # koordinaatistossa ennen kuin pyöritetään pisteitä
 
         # pyörimisestä johtuvat muutokset
-        theta = w * i * dt  # uusi kulma, jolla kolmio pyörii (kulmanopeus rad/s * deltatime = rad)
+        theta = w * (i * dt)  # uusi kulma, jolla kolmio pyörii (kulmanopeus rad/s * (iteraatio * deltatime) = rad)
         uudet_kulmapisteet3 = []  # nollataan lista tässä vaiheessa ennen seuraavaa silmukkaa
 
 
