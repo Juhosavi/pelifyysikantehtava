@@ -68,7 +68,7 @@ while True:
     ylist.append(seuraava_y)
     vya = vyl
 
-# Päivitetään arvot törmäyksen jälkeen (kaavalapun kaavoista)
+# Päivitetään arvot törmäyksen johdosta (kaavalapun kaavoista)
 tormaus_x, tormaus_y = tormayskohta
 rP = tormaus_x - xlist[-1], tormaus_y - ylist[-1]
 w_x_rP = 0 - w * rP[1], (0 - w * rP[0]) * -1
@@ -86,20 +86,20 @@ y_last = ylist[-1]  # talletetaan viimeisen kolmion x ja y
 
 kulman_kasvu += w * dt
 
-xlist = [] # tyhjennetään vanhoista arvoista
+xlist = [] # tyhjennetään liikeradan listat vanhoista arvoista
 ylist = []
-xlist.append(x_last) # lisätään viimeisin vanha arvo takaisin
+xlist.append(x_last) # lisätään vain viimeisimmät vanhat arvo takaisin
 ylist.append(y_last)
 
-uudet_pisteet = []
+uudet_pisteet = [] # kolmion pisteille uusi lista
 
-i = 1 # tallennetaan viimeisen kolmion kulmapisteet ennen törmäystä, joista jatketaan
+i = 1 # tallennetaan viimeisen kolmion kulmapisteet ennen törmäystä, joista sitten jatketaan laskemista
 while i < len(uudet_kulmapisteet):
     j = uudet_kulmapisteet[i][0] - x_last, uudet_kulmapisteet[i][1] - y_last
     uudet_pisteet.append(j)
     i += 1
 
-while True: # törmäyksen jälkeinen liikerata ja pyöriminen
+while True: # törmäyksen jälkeinen liikerata
     vyl = vya - g * dt
     seuraava_x = xlist[-1] + vx * dt
     seuraava_y = ylist[-1] + (vya + vyl) / 2 * dt
@@ -108,14 +108,14 @@ while True: # törmäyksen jälkeinen liikerata ja pyöriminen
     kulman_kasvu += w * dt
     uudet_kulmapisteet = []
 
-    for px, py in kulmapisteet:
+    for px, py in kulmapisteet: # uusi pyöriminen
         x_pisteen_kierto = (px - xlist[-1]) * cos(kulman_kasvu) - (py - ylist[-1]) * sin(kulman_kasvu)
         y_pisteen_kierto = (px - xlist[-1]) * sin(kulman_kasvu) + (py - ylist[-1]) * cos(kulman_kasvu)
         karjen_uusi_x = xlist[-1] + x_pisteen_kierto
         karjen_uusi_y = ylist[-1] + y_pisteen_kierto
         uudet_kulmapisteet.append((karjen_uusi_x, karjen_uusi_y))
 
-    uudet_kulmapisteet.append(uudet_kulmapisteet[0])
+    uudet_kulmapisteet.append(uudet_kulmapisteet[0]) # sulkee kolmion
     kolmion_x_koordinaatit, kolmion_y_koordinaatit = zip(*uudet_kulmapisteet)
     plt.plot(kolmion_x_koordinaatit, kolmion_y_koordinaatit, color='blue')
 
