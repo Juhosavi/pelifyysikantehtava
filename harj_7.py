@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 from math import sin, cos, radians
 
-"""GLOBAALIT MUUTTUJAT"""
 
 # Fysiikka-asetukset
 g = 10  # Painovoima (m/s^2), tällä hetkellä pois päältä
