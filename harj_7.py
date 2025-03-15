@@ -7,7 +7,7 @@ g = 9.81  # Painovoima (m/s^2), tällä hetkellä pois päältä
 m = 0.1  # massa kg, ei vaikuta muuhun kuin törmäykseen, koska painovoima ainoa vaikuttava voima
 J = 0.04  # hitausmomentti kgm^2
 e = 1.0  # sysäyskerroin
-dt = 0.1  # Aikaväli (s)
+dt = 0.05  # Aikaväli (s)
 
 # Alkuarvot
 xlist = [0.0]  # Alku x-koordinaatti
@@ -110,9 +110,12 @@ ylist = []
 
 xlist.append(xlist_last)
 ylist.append(ylist_last)
-uudet_kulmapisteet2 = [uudet_kulmapisteet[0], uudet_kulmapisteet[1], uudet_kulmapisteet[2]]
-
-
+uudet_kulmapisteet2 = []
+i = 1
+while i < len(uudet_kulmapisteet):
+    j = uudet_kulmapisteet[i][0] - xlist_last, uudet_kulmapisteet[i][1] - ylist_last
+    uudet_kulmapisteet2.append(j)
+    i += 1
 
 
 while True:
@@ -124,7 +127,7 @@ while True:
 
     for i, (x, y) in enumerate(zip(xlist, ylist)):
         # uudet kulmapisteet ennen pyöritystä (liikutaan koordinaatistossa)
-        kulmapisteet1 = [(x + px, y + py) for px, py in kolmion_pisteet]
+        kulmapisteet1 = [(x + px, y + py) for px, py in uudet_kulmapisteet2]
         # eli lisätään myös kulmapisteiden #sijainneille aiemmassa loopissa lasketut kolmion uudet CM-sijainnit
         # koordinaatistossa ennen kuin pyöritetään pisteitä
 
