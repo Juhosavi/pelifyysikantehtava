@@ -3,10 +3,10 @@ from math import sin, cos, radians
 
 
 # Fysiikka-asetukset
-g = 10  # Painovoima (m/s^2), tällä hetkellä pois päältä
+g = 9.81  # Painovoima (m/s^2), tällä hetkellä pois päältä
 m = 0.1  # massa kg, ei vaikuta muuhun kuin törmäykseen, koska painovoima ainoa vaikuttava voima
 J = 0.04  # hitausmomentti kgm^2
-e = 1  # sysäyskerroin
+e = 1.0  # sysäyskerroin
 dt = 0.1  # Aikaväli (s)
 
 # Alkuarvot
@@ -116,7 +116,7 @@ uudet_kulmapisteet2 = [uudet_kulmapisteet[0], uudet_kulmapisteet[1], uudet_kulma
 
 
 while True:
-    vyl = vya - g * dt  # Päivitetään y-nopeus (tässä painovoima pois päältä, joten ei kuitenkaan muutu)
+    vyl = vya - g * dt  # Päivitetään y-nopeus
     seuraava_x = xlist[-1] + vx * dt  # Seuraava x-koordinaatti, lisätään edelliseen sijaintiin uusi sijainti ajanhetken dt kuluttua
     seuraava_y = ylist[-1] + (vya + vyl) / 2 * dt  # Seuraava y-koordinaatti, lasketaan keskinopeus (alkunopeus+loppunopeus jaettuna 2)
     # ja sitten sen avulla lasketaan kuljettu matka, joka lisätään viimeiseen y-sijaintiin
