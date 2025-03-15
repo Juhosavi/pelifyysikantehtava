@@ -43,6 +43,7 @@ while True:
     seuraava_x = xlist[-1] + vx * dt  # Seuraava x-koordinaatti, lisätään edelliseen sijaintiin uusi sijainti ajanhetken dt kuluttua
     seuraava_y = ylist[-1] + (vya + vyl) / 2 * dt  # Seuraava y-koordinaatti, lasketaan keskinopeus (alkunopeus+loppunopeus jaettuna 2)
     # ja sitten sen avulla lasketaan kuljettu matka, joka lisätään viimeiseen y-sijaintiin
+    print(vx)
 
     for i, (x, y) in enumerate(zip(xlist, ylist)):
         # uudet kulmapisteet ennen pyöritystä (liikutaan koordinaatistossa)
@@ -102,12 +103,22 @@ w = w + (I/J * rP_x_n)
 print(vx)
 print(rP_x_n**2)
 
+xlist_last = xlist[-1]
+ylist_last = ylist[-1]
+
+xlist = []
+ylist = []
+
+xlist.append(xlist_last)
+ylist.append(ylist_last)
+
 
 while True:
     vyl = vya - g * dt  # Päivitetään y-nopeus (tässä painovoima pois päältä, joten ei kuitenkaan muutu)
     seuraava_x = xlist[-1] + vx * dt  # Seuraava x-koordinaatti, lisätään edelliseen sijaintiin uusi sijainti ajanhetken dt kuluttua
     seuraava_y = ylist[-1] + (vya + vyl) / 2 * dt  # Seuraava y-koordinaatti, lasketaan keskinopeus (alkunopeus+loppunopeus jaettuna 2)
     # ja sitten sen avulla lasketaan kuljettu matka, joka lisätään viimeiseen y-sijaintiin
+    print(vx)
 
     for i, (x, y) in enumerate(zip(xlist, ylist)):
         # uudet kulmapisteet ennen pyöritystä (liikutaan koordinaatistossa)
@@ -118,6 +129,7 @@ while True:
         # pyörimisestä johtuvat muutokset
         theta = w * i * dt  # uusi kulma, jolla kolmio pyörii (kulmanopeus rad/s * deltatime = rad)
         uudet_kulmapisteet = []  # nollataan lista tässä vaiheessa ennen seuraavaa silmukkaa
+        print(vx)
 
         # Lasketaan uudessa sijainnissa olevan kolmion pisteiden pyöriminen
         for px, py in kulmapisteet:
@@ -140,7 +152,7 @@ while True:
         kolmion_x_koordinaatit, kolmion_y_koordinaatit = zip(*uudet_kulmapisteet)
         plt.plot(kolmion_x_koordinaatit, kolmion_y_koordinaatit, color='blue')
 
-    if tormayskohta:  # jos tormäyskohta-lista ei ole tyhjä, eli jokin kulma on törmännyt janaan
+    if seuraava_x > 15:
         break
 
     xlist.append(seuraava_x)
