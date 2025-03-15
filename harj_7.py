@@ -4,9 +4,9 @@ from math import sin, cos, radians
 """GLOBAALIT MUUTTUJAT"""
 
 # Fysiikka-asetukset
-g = 9.81  # Painovoima (m/s^2), tällä hetkellä pois päältä
-m = 0.2  # massa kg, ei vaikuta muuhun kuin törmäykseen, koska painovoima ainoa vaikuttava voima
-J = 0.5  # hitausmomentti kgm^2
+g = 10  # Painovoima (m/s^2), tällä hetkellä pois päältä
+m = 0.1  # massa kg, ei vaikuta muuhun kuin törmäykseen, koska painovoima ainoa vaikuttava voima
+J = 0.04  # hitausmomentti kgm^2
 e = 1  # sysäyskerroin
 dt = 0.1  # Aikaväli (s)
 
@@ -79,6 +79,7 @@ while True:
         plt.plot(kolmion_x_koordinaatit, kolmion_y_koordinaatit, color='blue')
 
     if tormayskohta:  # jos tormäyskohta-lista ei ole tyhjä, eli jokin kulma on törmännyt janaan
+        xlist.append(seuraava_x)
         break
 
     xlist.append(seuraava_x)
@@ -96,12 +97,10 @@ VP = vx + w_x_rP[0], vyl + w_x_rP[1]
 VP_n = VP[0] * 0, VP[1] * -1  # m/s
 VP_n = VP_n[1]
 
-I = -1 * (1 + e) * (VP_n / (1/m + ((rP_x_n**2) / J)))  # törmäysimpulssin suuruus
+Impulssi = -1 * (1 + e) * (VP_n / (1 / m + ((rP_x_n ** 2) / J)))  # törmäysimpulssin suuruus
 
-vya = vya + (I/m * -1)
-w = w + (I/J * rP_x_n)
-
-print(w)
+vya = vya + (Impulssi / m * -1)
+w = w + (Impulssi / J * rP_x_n)
 
 
 xlist_last = xlist[-1]
@@ -113,8 +112,7 @@ ylist = []
 xlist.append(xlist_last)
 ylist.append(ylist_last)
 uudet_kulmapisteet2 = [uudet_kulmapisteet[0], uudet_kulmapisteet[1], uudet_kulmapisteet[2]]
-print(uudet_kulmapisteet)
-print(uudet_kulmapisteet2)
+
 
 
 
@@ -147,9 +145,6 @@ while True:
             karjen_uusi_y = y + y_pisteen_kierto
 
             uudet_kulmapisteet3.append((karjen_uusi_x, karjen_uusi_y))
-
-            if karjen_uusi_y <= 0:# tämä kohta tallentaa törmäävän kärjen sijainnin
-                tormayskohta = karjen_uusi_x, karjen_uusi_y
 
         uudet_kulmapisteet3.append(uudet_kulmapisteet3[0])  # Suljetaan kolmio yhdistämällä alku- ja loppupiste
 
