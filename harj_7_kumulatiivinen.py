@@ -81,18 +81,18 @@ w = w + (Impulssi / J * rP_x_n)
 
 # Uusi simulaatio törmäyksen jälkeen
 x_last = xlist[-1]
-y_last = ylist[-1]
+y_last = ylist[-1]  # talletetaan viimeisen kolmion x ja y
 
 kulmanylitys += w * dt
 
-xlist = []
+xlist = [] #  tyhjennetään vanhoista arvoista
 ylist = []
-xlist.append(x_last)
+xlist.append(x_last) # lisätään viimeisin vanha arvo takaisin
 ylist.append(y_last)
 
 uudet_pisteet = []
 
-i = 1
+i = 1 # tallennetaan viimeisen kolmion pisteet ennen törmäystä, joista jatketaan
 while i < len(uudet_kulmapisteet):
     j = uudet_kulmapisteet[i][0] - x_last, uudet_kulmapisteet[i][1] - y_last
     uudet_pisteet.append(j)
