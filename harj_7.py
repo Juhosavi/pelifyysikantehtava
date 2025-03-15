@@ -6,9 +6,9 @@ from math import sin, cos, radians
 # Fysiikka-asetukset
 g = 9.81  # Painovoima (m/s^2), tällä hetkellä pois päältä
 m = 0.2  # massa kg, ei vaikuta muuhun kuin törmäykseen, koska painovoima ainoa vaikuttava voima
-J = 0.04  # hitausmomentti kgm^2
+J = 0.5  # hitausmomentti kgm^2
 e = 1  # sysäyskerroin
-dt = 0.15  # Aikaväli (s)
+dt = 0.1  # Aikaväli (s)
 
 # Alkuarvot
 xlist = [0.0]  # Alku x-koordinaatti
@@ -36,6 +36,8 @@ kolmion_pisteet = [
     ]
 
 tormayskohta = []
+kulmapisteet = []
+uudet_kulmapisteet = []
 
 # Lasketaan kolmion CM-sijainteja ja lisätään ne listoihin niin kauan, kunnes annettu raja tulee vastaan
 while True:
@@ -43,7 +45,7 @@ while True:
     seuraava_x = xlist[-1] + vx * dt  # Seuraava x-koordinaatti, lisätään edelliseen sijaintiin uusi sijainti ajanhetken dt kuluttua
     seuraava_y = ylist[-1] + (vya + vyl) / 2 * dt  # Seuraava y-koordinaatti, lasketaan keskinopeus (alkunopeus+loppunopeus jaettuna 2)
     # ja sitten sen avulla lasketaan kuljettu matka, joka lisätään viimeiseen y-sijaintiin
-    print(vx)
+
 
     for i, (x, y) in enumerate(zip(xlist, ylist)):
         # uudet kulmapisteet ennen pyöritystä (liikutaan koordinaatistossa)
@@ -89,8 +91,7 @@ while True:
 rP = tormayskohta[0] - xlist[-1], tormayskohta[1] - ylist[-1]
 w_x_rP = 0 - w * rP[1], (0 - w * rP[0]) * -1
 rP_x_n = rP[0] * -1 - 0
-#print(w_x_rP)
-print(rP_x_n)
+
 VP = vx + w_x_rP[0], vyl + w_x_rP[1]
 VP_n = VP[0] * 0, VP[1] * -1  # m/s
 VP_n = VP_n[1]
@@ -100,8 +101,8 @@ I = -1 * (1 + e) * (VP_n / (1/m + ((rP_x_n**2) / J)))  # törmäysimpulssin suur
 vya = vya + (I/m * -1)
 w = w + (I/J * rP_x_n)
 
-print(vx)
-print(rP_x_n**2)
+print(w)
+
 
 xlist_last = xlist[-1]
 ylist_last = ylist[-1]
@@ -111,6 +112,10 @@ ylist = []
 
 xlist.append(xlist_last)
 ylist.append(ylist_last)
+uudet_kulmapisteet2 = [uudet_kulmapisteet[0], uudet_kulmapisteet[1], uudet_kulmapisteet[2]]
+print(uudet_kulmapisteet)
+print(uudet_kulmapisteet2)
+
 
 
 while True:
@@ -118,21 +123,21 @@ while True:
     seuraava_x = xlist[-1] + vx * dt  # Seuraava x-koordinaatti, lisätään edelliseen sijaintiin uusi sijainti ajanhetken dt kuluttua
     seuraava_y = ylist[-1] + (vya + vyl) / 2 * dt  # Seuraava y-koordinaatti, lasketaan keskinopeus (alkunopeus+loppunopeus jaettuna 2)
     # ja sitten sen avulla lasketaan kuljettu matka, joka lisätään viimeiseen y-sijaintiin
-    print(vx)
+
 
     for i, (x, y) in enumerate(zip(xlist, ylist)):
         # uudet kulmapisteet ennen pyöritystä (liikutaan koordinaatistossa)
-        kulmapisteet = [(x + px, y + py) for px, py in kolmion_pisteet]
+        kulmapisteet1 = [(x + px, y + py) for px, py in kolmion_pisteet]
         # eli lisätään myös kulmapisteiden #sijainneille aiemmassa loopissa lasketut kolmion uudet CM-sijainnit
         # koordinaatistossa ennen kuin pyöritetään pisteitä
 
         # pyörimisestä johtuvat muutokset
         theta = w * i * dt  # uusi kulma, jolla kolmio pyörii (kulmanopeus rad/s * deltatime = rad)
-        uudet_kulmapisteet = []  # nollataan lista tässä vaiheessa ennen seuraavaa silmukkaa
-        print(vx)
+        uudet_kulmapisteet3 = []  # nollataan lista tässä vaiheessa ennen seuraavaa silmukkaa
+
 
         # Lasketaan uudessa sijainnissa olevan kolmion pisteiden pyöriminen
-        for px, py in kulmapisteet:
+        for px, py in kulmapisteet1:
             # Siirretään piste (px, py) ja pyöritetään sitä
             x_pisteen_kierto = (px - x) * cos(theta) - (py - y) * sin(theta)  # (px - x) on tässä rpCM
             # eli CM:stä kärkeen kulkevan vektorin x-komponentti
@@ -141,15 +146,15 @@ while True:
             y_pisteen_kierto = (px - x) * sin(theta) + (py - y) * cos(theta)
             karjen_uusi_y = y + y_pisteen_kierto
 
-            uudet_kulmapisteet.append((karjen_uusi_x, karjen_uusi_y))
+            uudet_kulmapisteet3.append((karjen_uusi_x, karjen_uusi_y))
 
             if karjen_uusi_y <= 0:# tämä kohta tallentaa törmäävän kärjen sijainnin
                 tormayskohta = karjen_uusi_x, karjen_uusi_y
 
-        uudet_kulmapisteet.append(uudet_kulmapisteet[0])  # Suljetaan kolmio yhdistämällä alku- ja loppupiste
+        uudet_kulmapisteet3.append(uudet_kulmapisteet3[0])  # Suljetaan kolmio yhdistämällä alku- ja loppupiste
 
         # Piirretään kolmio
-        kolmion_x_koordinaatit, kolmion_y_koordinaatit = zip(*uudet_kulmapisteet)
+        kolmion_x_koordinaatit, kolmion_y_koordinaatit = zip(*uudet_kulmapisteet3)
         plt.plot(kolmion_x_koordinaatit, kolmion_y_koordinaatit, color='blue')
 
     if seuraava_x > 15:
