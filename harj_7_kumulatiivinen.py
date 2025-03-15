@@ -6,7 +6,7 @@ g = 9.81  # Painovoima (m/s^2)
 m = 0.1  # Massa (kg)
 J = 0.04  # Hitausmomentti (kgm^2)
 e = 1  # Sysäyskerroin
-dt = 0.1  # Aikaväli (s)
+dt = 0.05  # Aikaväli (s)
 
 # Alkuarvot
 xlist = [0.0]  # Alku x-koordinaatti
@@ -80,15 +80,30 @@ vya = vya + (Impulssi / m * -1)
 w = w + (Impulssi / J * rP_x_n)
 
 # Uusi simulaatio törmäyksen jälkeen
+x_last = xlist[-1]
+y_last = ylist[-1]
+
 kulmanylitys += w * dt
-xlist.append(xlist[-1])
-ylist.append(ylist[-1])
+
+xlist = []
+ylist = []
+xlist.append(x_last)
+ylist.append(y_last)
+
+uudet_pisteet = []
+
+i = 1
+while i < len(uudet_kulmapisteet):
+    j = uudet_kulmapisteet[i][0] - x_last, uudet_kulmapisteet[i][1] - y_last
+    uudet_pisteet.append(j)
+    i += 1
+
 while True:
     vyl = vya - g * dt
     seuraava_x = xlist[-1] + vx * dt
     seuraava_y = ylist[-1] + (vya + vyl) / 2 * dt
 
-    kulmapisteet = [(xlist[-1] + px, ylist[-1] + py) for px, py in kolmion_pisteet]
+    kulmapisteet = [(xlist[-1] + px, ylist[-1] + py) for px, py in uudet_pisteet]
     kulmanylitys += w * dt
     uudet_kulmapisteet = []
 
@@ -116,3 +131,4 @@ plt.ylim(-2, 10)
 plt.xlabel("x (m)")
 plt.ylabel("y (m)")
 plt.show()
+
