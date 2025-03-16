@@ -3,18 +3,18 @@ from math import sin, cos, radians
 
 # Fysiikka-asetukset
 g = 9.81  # Painovoima (m/s^2)
-m = 0.1  # Massa (kg)
+m = 0.2  # massa (kg)
 J = 0.04  # Hitausmomentti (kgm^2)
-e = 1  # Sysäyskerroin
-dt = 0.06# Aikaväli (s)
+e = 1  # sysäyskerroin
+dt = 0.04  # aikaväli (s)
 
-# Alkuarvot
-xlist = [0.0]  # Alku x-koordinaatti
-ylist = [4.0]  # Alku y-koordinaatti
-v0 = 9  # Alkunopeus (m/s)
-kulma = radians(55)  # Kulma asteina
-vx = v0 * cos(kulma)  # Nopeuden x-komponentti
-vya = v0 * sin(kulma)  # Nopeuden y-komponentti
+# alkuarvot
+xlist = [0.0]  # x-koordinaatti alussa
+ylist = [4.0]  # y-koordinaatti alussa
+v0 = 9  # alkunopeus (m/s)
+kulma = radians(55)  # kulma asteina -> muutetaan radiaaneiksi
+vx = v0 * cos(kulma)  # nopeuden x-komponentti
+vya = v0 * sin(kulma)  # nopeuden y-komponentti
 
 # Janan määrittely
 jana_p1 = (-2, 0)
@@ -54,8 +54,11 @@ while True:
         karjen_uusi_y = ylist[-1] + y_pisteen_kierto
         uudet_kulmapisteet.append((karjen_uusi_x, karjen_uusi_y))
 
-        if karjen_uusi_y <= 0: # jos kärjen y-koordinaatti on 0 tai alle sen, se on kärki joka törmää janaan
-            tormayskohta = karjen_uusi_x, 0.0 # tallennetaan törmäyspisteen sijainti (y = 0 koska jana on 0:ssa)
+        if karjen_uusi_y < 0:
+            #  Lasketaan kärjen nopeusvektori
+            karjen_vy = vyl + (w * x_pisteen_kierto)
+            if karjen_vy < 0:  # jos kärjen nopeusvektorin suunta on < 0
+                tormayskohta = (karjen_uusi_x, karjen_uusi_y)
 
     uudet_kulmapisteet.append(uudet_kulmapisteet[0])
     kolmion_x_koordinaatit, kolmion_y_koordinaatit = zip(*uudet_kulmapisteet)
@@ -86,12 +89,12 @@ y_last = ylist[-1]  # talletetaan viimeisen kolmion x ja y
 
 kulman_kasvu += w * dt
 
-xlist = [] # tyhjennetään liikeradan listat vanhoista arvoista
+xlist = []  # tyhjennetään liikeradan/massakeskipisteen listat vanhoista arvoista
 ylist = []
-xlist.append(x_last) # lisätään vain viimeisimmät vanhat arvo takaisin
+xlist.append(x_last)  # lisätään vain viimeisimmät vanhat arvot takaisin
 ylist.append(y_last)
 
-uudet_pisteet = [] # kolmion pisteille uusi lista
+uudet_pisteet = []  # kolmion pisteille uusi lista
 
 i = 1 # tallennetaan viimeisen kolmion kulmapisteet ennen törmäystä, joista sitten jatketaan laskemista
 while i < len(uudet_kulmapisteet):
@@ -99,7 +102,7 @@ while i < len(uudet_kulmapisteet):
     uudet_pisteet.append(j)
     i += 1
 
-while True: # törmäyksen jälkeinen liikerata
+while True:  # törmäyksen jälkeinen liikerata
     vyl = vya - g * dt
     seuraava_x = xlist[-1] + vx * dt
     seuraava_y = ylist[-1] + (vya + vyl) / 2 * dt
