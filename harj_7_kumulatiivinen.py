@@ -3,16 +3,16 @@ from math import sin, cos, radians
 
 # Fysiikka-asetukset
 g = 9.81  # Painovoima (m/s^2)
-m = 0.2  # massa (kg)
+m = 0.1  # massa (kg)
 J = 0.04  # Hitausmomentti (kgm^2)
 e = 1  # sysäyskerroin
-dt = 0.04  # aikaväli (s)
+dt = 0.05  # aikaväli (s)
 
 # alkuarvot
 xlist = [0.0]  # x-koordinaatti alussa
 ylist = [4.0]  # y-koordinaatti alussa
 v0 = 9  # alkunopeus (m/s)
-kulma = radians(55)  # kulma asteina -> muutetaan radiaaneiksi
+kulma = radians(50)  # kulma asteina -> muutetaan radiaaneiksi
 vx = v0 * cos(kulma)  # nopeuden x-komponentti
 vya = v0 * sin(kulma)  # nopeuden y-komponentti
 
